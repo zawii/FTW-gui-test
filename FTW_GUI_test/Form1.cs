@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,7 +50,7 @@ namespace FTW_GUI_test
         {
             //if (e.Data.)
             //{
-                e.Effect = DragDropEffects.Copy;
+            e.Effect = DragDropEffects.Copy;
 
             //}
         }
@@ -59,7 +60,7 @@ namespace FTW_GUI_test
             FileList_txtBox.Text = string.Empty;
 
             string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-            
+
             foreach (var filepath in FileList)
             {
                 FileList_txtBox.Text += filepath + Environment.NewLine;
@@ -71,9 +72,41 @@ namespace FTW_GUI_test
 
         private void Close_Btn_Click(object sender, EventArgs e)
         {
-            Dispose();
+
+            Application.Exit();
         }
 
-       
+        private void Login_txtBox_Click(object sender, EventArgs e)
+        {
+            if (Login_txtBox.Text == "username@lionbridge.com")
+            {
+                Login_txtBox.Text = string.Empty;
+            }
+        }
+
+        private void Password_txtBox_Click(object sender, EventArgs e)
+        {
+            if (Password_txtBox.Text == "Password")
+            {
+                Password_txtBox.Text = string.Empty;
+            }
+        }
+
+
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            var settingsFromFile = File.ReadAllLines(@"c:\users\zawii\documents\visual studio 2015\Projects\FTW_GUI_test\FTW_GUI_test\settings.txt");
+
+            Login_txtBox.Text = Environment.UserName + "@lionbridge.com"; //settingsFromFile[0]
+            Password_txtBox.Text = settingsFromFile[1];
+
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            File.WriteAllText(@"c:\users\zawii\documents\visual studio 2015\Projects\FTW_GUI_test\FTW_GUI_test\settings.txt", Login_txtBox.Text + Environment.NewLine + Password_txtBox.Text);
+
+        }
     }
 }

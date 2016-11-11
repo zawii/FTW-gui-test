@@ -95,6 +95,7 @@
             this.Login_txtBox.Size = new System.Drawing.Size(164, 20);
             this.Login_txtBox.TabIndex = 4;
             this.Login_txtBox.Text = "username@lionbridge.com";
+            this.Login_txtBox.Click += new System.EventHandler(this.Login_txtBox_Click);
             // 
             // Password_txtBox
             // 
@@ -104,6 +105,7 @@
             this.Password_txtBox.TabIndex = 5;
             this.Password_txtBox.Text = "Password";
             this.Password_txtBox.UseSystemPasswordChar = true;
+            this.Password_txtBox.Click += new System.EventHandler(this.Password_txtBox_Click);
             // 
             // FileList_txtBox
             // 
@@ -311,6 +313,8 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Dr Prepper";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
