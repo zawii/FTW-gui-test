@@ -50,7 +50,7 @@
             this.Formatting_comboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // button1
+            // PrepareFiles_Btn
             // 
             this.PrepareFiles_Btn.Location = new System.Drawing.Point(329, 432);
             this.PrepareFiles_Btn.Name = "PrepareFiles_Btn";
@@ -59,16 +59,17 @@
             this.PrepareFiles_Btn.Text = "Prepare file(s)";
             this.PrepareFiles_Btn.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // Close_Btn
             // 
             this.Close_Btn.Location = new System.Drawing.Point(434, 432);
-            this.Close_Btn.Name = "button2";
+            this.Close_Btn.Name = "Close_Btn";
             this.Close_Btn.Size = new System.Drawing.Size(99, 27);
             this.Close_Btn.TabIndex = 1;
             this.Close_Btn.Text = "Close";
             this.Close_Btn.UseVisualStyleBackColor = true;
+            this.Close_Btn.Click += new System.EventHandler(this.Close_Btn_Click);
             // 
-            // comboBox1
+            // ChooseTM_cmbBox
             // 
             this.ChooseTM_cmbBox.FormattingEnabled = true;
             this.ChooseTM_cmbBox.Location = new System.Drawing.Point(350, 32);
@@ -84,7 +85,7 @@
             this.progressBar1.Size = new System.Drawing.Size(315, 27);
             this.progressBar1.TabIndex = 3;
             // 
-            // textBox1
+            // Login_txtBox
             // 
             this.Login_txtBox.Location = new System.Drawing.Point(18, 18);
             this.Login_txtBox.MaxLength = 50;
@@ -93,7 +94,7 @@
             this.Login_txtBox.TabIndex = 4;
             this.Login_txtBox.Text = "username@lionbridge.com";
             // 
-            // textBox2
+            // Password_txtBox
             // 
             this.Password_txtBox.Location = new System.Drawing.Point(18, 44);
             this.Password_txtBox.Name = "Password_txtBox";
@@ -102,16 +103,20 @@
             this.Password_txtBox.Text = "Password";
             this.Password_txtBox.UseSystemPasswordChar = true;
             // 
-            // textBox3
+            // FileList_txtBox
             // 
+            this.FileList_txtBox.AllowDrop = true;
             this.FileList_txtBox.Location = new System.Drawing.Point(18, 116);
             this.FileList_txtBox.Multiline = true;
             this.FileList_txtBox.Name = "FileList_txtBox";
             this.FileList_txtBox.ReadOnly = true;
+            this.FileList_txtBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.FileList_txtBox.Size = new System.Drawing.Size(513, 162);
             this.FileList_txtBox.TabIndex = 6;
+            this.FileList_txtBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.FileList_txtBox_DragDrop);
+            this.FileList_txtBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.FileList_txtBox_DragEnter);
             // 
-            // checkBox1
+            // IncludeSourceFile_chckBox
             // 
             this.IncludeSourceFile_chckBox.AutoSize = true;
             this.IncludeSourceFile_chckBox.Checked = true;
@@ -123,7 +128,7 @@
             this.IncludeSourceFile_chckBox.Text = "Include Source File";
             this.IncludeSourceFile_chckBox.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // TrimTags_chckBox
             // 
             this.TrimTags_chckBox.AutoSize = true;
             this.TrimTags_chckBox.Checked = true;
@@ -135,7 +140,7 @@
             this.TrimTags_chckBox.Text = "Trim Tags";
             this.TrimTags_chckBox.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // Pseudotranslate_chckBox
             // 
             this.Pseudotranslate_chckBox.AutoSize = true;
             this.Pseudotranslate_chckBox.Checked = true;
@@ -147,7 +152,7 @@
             this.Pseudotranslate_chckBox.Text = "Pseudotranslate";
             this.Pseudotranslate_chckBox.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // OpenXLZ_chckBox
             // 
             this.OpenXLZ_chckBox.AutoSize = true;
             this.OpenXLZ_chckBox.Checked = true;
@@ -159,7 +164,7 @@
             this.OpenXLZ_chckBox.Text = "Open XLZ";
             this.OpenXLZ_chckBox.UseVisualStyleBackColor = true;
             // 
-            // checkBox5
+            // OpenXtrans_chckBox
             // 
             this.OpenXtrans_chckBox.AutoSize = true;
             this.OpenXtrans_chckBox.Checked = true;
@@ -171,7 +176,7 @@
             this.OpenXtrans_chckBox.Text = "Open Pseudotranslated File";
             this.OpenXtrans_chckBox.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // StandardOptions_label
             // 
             this.StandardOptions_label.AutoSize = true;
             this.StandardOptions_label.Font = new System.Drawing.Font("Kokila", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -181,7 +186,7 @@
             this.StandardOptions_label.TabIndex = 12;
             this.StandardOptions_label.Text = "Standard Options:";
             // 
-            // label2
+            // AdditionalOptions_label
             // 
             this.AdditionalOptions_label.AutoSize = true;
             this.AdditionalOptions_label.Font = new System.Drawing.Font("Kokila", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -191,7 +196,7 @@
             this.AdditionalOptions_label.TabIndex = 13;
             this.AdditionalOptions_label.Text = "Additional Options:";
             // 
-            // checkBox6
+            // CreateAnalysis_chckBox
             // 
             this.CreateAnalysis_chckBox.AutoSize = true;
             this.CreateAnalysis_chckBox.Checked = true;
@@ -203,7 +208,7 @@
             this.CreateAnalysis_chckBox.Text = "Create Analysis ZIP";
             this.CreateAnalysis_chckBox.UseVisualStyleBackColor = true;
             // 
-            // checkBox7
+            // UnlockNumbers_chckBox
             // 
             this.UnlockNumbers_chckBox.AutoSize = true;
             this.UnlockNumbers_chckBox.Location = new System.Drawing.Point(281, 338);
@@ -213,7 +218,7 @@
             this.UnlockNumbers_chckBox.Text = "Unlock numbers";
             this.UnlockNumbers_chckBox.UseVisualStyleBackColor = true;
             // 
-            // checkBox8
+            // RunPrepChecker_chckBox
             // 
             this.RunPrepChecker_chckBox.AutoSize = true;
             this.RunPrepChecker_chckBox.Location = new System.Drawing.Point(281, 354);
@@ -223,7 +228,7 @@
             this.RunPrepChecker_chckBox.Text = "Run Prep Checker";
             this.RunPrepChecker_chckBox.UseVisualStyleBackColor = true;
             // 
-            // checkBox9
+            // LockBasedOnFormatting_chckBox
             // 
             this.LockBasedOnFormatting_chckBox.AutoSize = true;
             this.LockBasedOnFormatting_chckBox.Location = new System.Drawing.Point(281, 370);
@@ -232,8 +237,9 @@
             this.LockBasedOnFormatting_chckBox.TabIndex = 17;
             this.LockBasedOnFormatting_chckBox.Text = "Lock based on formatting";
             this.LockBasedOnFormatting_chckBox.UseVisualStyleBackColor = true;
+            this.LockBasedOnFormatting_chckBox.CheckedChanged += new System.EventHandler(this.LockBasedOnFormatting_chckBox_CheckedChanged);
             // 
-            // checkBox10
+            // LockExceptThisFormatting_chckBox
             // 
             this.LockExceptThisFormatting_chckBox.AutoSize = true;
             this.LockExceptThisFormatting_chckBox.Location = new System.Drawing.Point(281, 386);
@@ -242,8 +248,9 @@
             this.LockExceptThisFormatting_chckBox.TabIndex = 18;
             this.LockExceptThisFormatting_chckBox.Text = "Lock except this formatting";
             this.LockExceptThisFormatting_chckBox.UseVisualStyleBackColor = true;
+            this.LockExceptThisFormatting_chckBox.CheckedChanged += new System.EventHandler(this.LockExceptThisFormatting_chckBox_CheckedChanged);
             // 
-            // comboBox2
+            // Formatting_comboBox
             // 
             this.Formatting_comboBox.Enabled = false;
             this.Formatting_comboBox.FormattingEnabled = true;
