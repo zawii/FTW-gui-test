@@ -108,5 +108,23 @@ namespace FTW_GUI_test
             File.WriteAllText(@"c:\users\zawii\documents\visual studio 2015\Projects\FTW_GUI_test\FTW_GUI_test\settings.txt", Login_txtBox.Text + Environment.NewLine + Password_txtBox.Text);
 
         }
+
+        private void AddTM_btn_Click(object sender, EventArgs e)
+        {
+            //spytaj o nazwe TM i serwer logoport, dodaj do listy przechowujacej TMy
+            string input = Microsoft.VisualBasic.Interaction.InputBox("Add TM to the menu\n\nExample input:\n\nTMname:logoport.lionbridge.com",
+                       "Add TM",
+                       "TMname:logoport.lionbridge.com");
+            char[] separators = new char[] { ':', ';' };
+
+            if (!string.IsNullOrEmpty(input))
+            {
+                var newTM = input.Split(separators);
+                ChooseTM_cmbBox.Text = newTM[0];
+
+                //dodac pare TM:logoport do listy
+            }
+
+        }
     }
 }

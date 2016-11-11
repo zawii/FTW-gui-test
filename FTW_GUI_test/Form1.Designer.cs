@@ -50,6 +50,8 @@
             this.Formatting_comboBox = new System.Windows.Forms.ComboBox();
             this.FIleCount_label = new System.Windows.Forms.Label();
             this.FileCountNumber_label = new System.Windows.Forms.Label();
+            this.AddTM_btn = new System.Windows.Forms.Button();
+            this.DeleteTM_btn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // PrepareFiles_Btn
@@ -74,7 +76,7 @@
             // ChooseTM_cmbBox
             // 
             this.ChooseTM_cmbBox.FormattingEnabled = true;
-            this.ChooseTM_cmbBox.Location = new System.Drawing.Point(350, 32);
+            this.ChooseTM_cmbBox.Location = new System.Drawing.Point(349, 43);
             this.ChooseTM_cmbBox.Name = "ChooseTM_cmbBox";
             this.ChooseTM_cmbBox.Size = new System.Drawing.Size(182, 21);
             this.ChooseTM_cmbBox.TabIndex = 2;
@@ -282,11 +284,33 @@
             this.FileCountNumber_label.TabIndex = 21;
             this.FileCountNumber_label.Text = "0";
             // 
+            // AddTM_btn
+            // 
+            this.AddTM_btn.Location = new System.Drawing.Point(349, 18);
+            this.AddTM_btn.Name = "AddTM_btn";
+            this.AddTM_btn.Size = new System.Drawing.Size(63, 21);
+            this.AddTM_btn.TabIndex = 22;
+            this.AddTM_btn.Text = "Add TM...";
+            this.AddTM_btn.UseVisualStyleBackColor = true;
+            this.AddTM_btn.Click += new System.EventHandler(this.AddTM_btn_Click);
+            // 
+            // DeleteTM_btn
+            // 
+            this.DeleteTM_btn.Location = new System.Drawing.Point(418, 18);
+            this.DeleteTM_btn.Name = "DeleteTM_btn";
+            this.DeleteTM_btn.Size = new System.Drawing.Size(63, 21);
+            this.DeleteTM_btn.TabIndex = 23;
+            this.DeleteTM_btn.Text = "Delete";
+            this.DeleteTM_btn.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.DeleteTM_btn.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(545, 471);
+            this.Controls.Add(this.DeleteTM_btn);
+            this.Controls.Add(this.AddTM_btn);
             this.Controls.Add(this.FileCountNumber_label);
             this.Controls.Add(this.FIleCount_label);
             this.Controls.Add(this.Formatting_comboBox);
@@ -344,6 +368,8 @@
         private System.Windows.Forms.ComboBox Formatting_comboBox;
         private System.Windows.Forms.Label FIleCount_label;
         private System.Windows.Forms.Label FileCountNumber_label;
+        private System.Windows.Forms.Button AddTM_btn;
+        private System.Windows.Forms.Button DeleteTM_btn;
     }
 }
 
