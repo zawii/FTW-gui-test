@@ -48,6 +48,8 @@
             this.LockBasedOnFormatting_chckBox = new System.Windows.Forms.CheckBox();
             this.LockExceptThisFormatting_chckBox = new System.Windows.Forms.CheckBox();
             this.Formatting_comboBox = new System.Windows.Forms.ComboBox();
+            this.FIleCount_label = new System.Windows.Forms.Label();
+            this.FileCountNumber_label = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // PrepareFiles_Btn
@@ -260,11 +262,31 @@
             this.Formatting_comboBox.TabIndex = 19;
             this.Formatting_comboBox.Text = "Formatting...";
             // 
+            // FIleCount_label
+            // 
+            this.FIleCount_label.AutoSize = true;
+            this.FIleCount_label.Location = new System.Drawing.Point(24, 100);
+            this.FIleCount_label.Name = "FIleCount_label";
+            this.FIleCount_label.Size = new System.Drawing.Size(57, 13);
+            this.FIleCount_label.TabIndex = 20;
+            this.FIleCount_label.Text = "File Count:";
+            // 
+            // FileCountNumber_label
+            // 
+            this.FileCountNumber_label.AutoSize = true;
+            this.FileCountNumber_label.Location = new System.Drawing.Point(78, 100);
+            this.FileCountNumber_label.Name = "FileCountNumber_label";
+            this.FileCountNumber_label.Size = new System.Drawing.Size(13, 13);
+            this.FileCountNumber_label.TabIndex = 21;
+            this.FileCountNumber_label.Text = "0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(545, 471);
+            this.Controls.Add(this.FileCountNumber_label);
+            this.Controls.Add(this.FIleCount_label);
             this.Controls.Add(this.Formatting_comboBox);
             this.Controls.Add(this.LockExceptThisFormatting_chckBox);
             this.Controls.Add(this.LockBasedOnFormatting_chckBox);
@@ -285,8 +307,10 @@
             this.Controls.Add(this.ChooseTM_cmbBox);
             this.Controls.Add(this.Close_Btn);
             this.Controls.Add(this.PrepareFiles_Btn);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Dr Prepper";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -314,6 +338,8 @@
         private System.Windows.Forms.CheckBox LockBasedOnFormatting_chckBox;
         private System.Windows.Forms.CheckBox LockExceptThisFormatting_chckBox;
         private System.Windows.Forms.ComboBox Formatting_comboBox;
+        private System.Windows.Forms.Label FIleCount_label;
+        private System.Windows.Forms.Label FileCountNumber_label;
     }
 }
 

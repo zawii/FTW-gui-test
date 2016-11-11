@@ -59,18 +59,21 @@ namespace FTW_GUI_test
             FileList_txtBox.Text = string.Empty;
 
             string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-
+            
             foreach (var filepath in FileList)
             {
                 FileList_txtBox.Text += filepath + Environment.NewLine;
 
             }
-           
+            FileCountNumber_label.Text = FileList.Length.ToString();
+
         }
 
         private void Close_Btn_Click(object sender, EventArgs e)
         {
             Dispose();
         }
+
+       
     }
 }
