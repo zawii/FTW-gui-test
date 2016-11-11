@@ -17,6 +17,28 @@ namespace FTW_GUI_test
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+
+
+           
+
         }
+
+
+
+
+
+
     }
+
+    public class TM
+    {
+        public string TMName { get; set; }
+        public string Server { get; set; } // TODO zmienic na enum?
+
+    }
+
+    
+
+
+
 }

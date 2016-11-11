@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,6 +18,9 @@ namespace FTW_GUI_test
         {
             InitializeComponent();
         }
+
+
+        
 
         private void LockBasedOnFormatting_chckBox_CheckedChanged(object sender, EventArgs e)
         {
@@ -100,6 +104,22 @@ namespace FTW_GUI_test
 
             Login_txtBox.Text = Environment.UserName + "@lionbridge.com"; //settingsFromFile[0]
             Password_txtBox.Text = settingsFromFile[1];
+
+
+            List<TM> TMList = new List<TM>();
+            TMList.Add(new TM() { TMName = "Volv32o", Server = "logport" });
+            TMList.Add(new TM() { TMName = "Vol3vo", Server = "logpor2t" });
+            TMList.Add(new TM() { TMName = "Vol3v323o", Server = "logport" });
+            TMList.Add(new TM() { TMName = "Vol1vo", Server = "logport" });
+            TMList.Add(new TM() { TMName = "Vol3vo", Server = "logport2" });
+            TMList.Add(new TM() { TMName = "Vol3v32o", Server = "logport2" });
+
+
+            foreach (var item in TMList)
+            {
+                ChooseTM_cmbBox.Items.Add(item.TMName);
+            }
+
 
         }
 
