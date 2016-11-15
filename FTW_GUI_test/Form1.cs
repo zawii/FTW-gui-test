@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,9 +21,13 @@ namespace FTW_GUI_test
         {
             InitializeComponent();
         }
+        List<TM> TMList = new List<TM>();
+        List<string> SettingStorage = new List<string>();
 
 
-        
+
+
+
 
         private void LockBasedOnFormatting_chckBox_CheckedChanged(object sender, EventArgs e)
         {
@@ -51,12 +58,8 @@ namespace FTW_GUI_test
         }
 
         private void FileList_txtBox_DragEnter(object sender, DragEventArgs e)
-        {
-            //if (e.Data.)
-            //{
+        {           
             e.Effect = DragDropEffects.Copy;
-
-            //}
         }
 
         private void FileList_txtBox_DragDrop(object sender, DragEventArgs e)
@@ -67,7 +70,11 @@ namespace FTW_GUI_test
 
             foreach (var filepath in FileList)
             {
-                FileList_txtBox.Text += filepath + Environment.NewLine;
+                //if (filepath.EndsWith()
+                //{
+                    
+                    FileList_txtBox.Text += filepath + Environment.NewLine;
+                //}
 
             }
             FileCountNumber_label.Text = FileList.Length.ToString();
@@ -100,38 +107,95 @@ namespace FTW_GUI_test
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var settingsFromFile = File.ReadAllLines(@"c:\users\zawii\documents\visual studio 2015\Projects\FTW_GUI_test\FTW_GUI_test\settings.txt");
 
-            Login_txtBox.Text = Environment.UserName + "@lionbridge.com"; //settingsFromFile[0]
-            Password_txtBox.Text = settingsFromFile[1];
-
-
-            List<TM> TMList = new List<TM>();
-            TMList.Add(new TM() { TMName = "Volv32o", Server = "logport" });
-            TMList.Add(new TM() { TMName = "Vol3vo", Server = "logpor2t" });
-            TMList.Add(new TM() { TMName = "Vol3v323o", Server = "logport" });
-            TMList.Add(new TM() { TMName = "Vol1vo", Server = "logport" });
-            TMList.Add(new TM() { TMName = "Vol3vo", Server = "logport2" });
-            TMList.Add(new TM() { TMName = "Vol3v32o", Server = "logport2" });
-
-
-            foreach (var item in TMList)
+            Login_txtBox.Text = Environment.UserName + "@lionbridge.com";
+            if (Properties.Settings.Default.password != string.Empty)
             {
-                ChooseTM_cmbBox.Items.Add(item.TMName);
+                Password_txtBox.Text = Properties.Settings.Default.password;
             }
+
+
+            if (Properties.Settings.Default.appSettings != null)
+            {
+                string[] checkboxArray = new string[Properties.Settings.Default.appSettings.Count];
+
+                Properties.Settings.Default.appSettings.CopyTo(checkboxArray, 0);
+
+                foreach (var item in checkboxArray)
+                {
+                    string[] temp = item.Split(':');
+                    string chckboxName = temp[0];
+                    string chckboxStatus = temp[1];
+
+                    foreach (var control in this.Controls)
+                    {
+                        if (control is CheckBox)
+                        {
+                            CheckBox chckbx = control as CheckBox;
+                            if (chckbx.Text == chckboxName)
+                            {
+                                chckbx.Checked = bool.Parse(chckboxStatus);
+                            }
+                            
+                        }
+
+                    }
+
+
+                }
+            }
+
+
+
+
+            try
+            {
+                using (Stream stream = File.Open(@"c:\users\zawii\documents\visual studio 2015\Projects\FTW_GUI_test\FTW_GUI_test\TMList.bin", FileMode.OpenOrCreate))
+                {
+                    BinaryFormatter bin = new BinaryFormatter();
+
+                    TMList = (List<TM>)bin.Deserialize(stream);
+                    foreach (var item in TMList)
+                    {
+                        ChooseTM_cmbBox.Items.Add(item.TMName);
+                    }
+                }
+            }
+            catch (IOException)
+            {
+            }
+
+            ChooseTM_cmbBox.SelectedIndex = 0;
+
 
 
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            File.WriteAllText(@"c:\users\zawii\documents\visual studio 2015\Projects\FTW_GUI_test\FTW_GUI_test\settings.txt", Login_txtBox.Text + Environment.NewLine + Password_txtBox.Text);
+
+
+            Properties.Settings.Default.password = Password_txtBox.Text;
+
+            Properties.Settings.Default.appSettings.Clear();
+
+            foreach (var control in this.Controls)
+            {
+                if (control is CheckBox)
+                {
+                    CheckBox chckbx = control as CheckBox;
+                    Properties.Settings.Default.appSettings.Add(chckbx.Text + ':'+ chckbx.Checked);
+                }
+               
+            }
+
+            Properties.Settings.Default.Save();
 
         }
 
+
         private void AddTM_btn_Click(object sender, EventArgs e)
         {
-            //spytaj o nazwe TM i serwer logoport, dodaj do listy przechowujacej TMy
             string input = Microsoft.VisualBasic.Interaction.InputBox("Add TM to the menu\n\nExample input:\n\nTMname:logoport.lionbridge.com",
                        "Add TM",
                        "TMname:logoport.lionbridge.com");
@@ -139,12 +203,124 @@ namespace FTW_GUI_test
 
             if (!string.IsNullOrEmpty(input))
             {
-                var newTM = input.Split(separators);
-                ChooseTM_cmbBox.Text = newTM[0];
+                var addition = input.Split(separators);
+                //ChooseTM_cmbBox.Text = newTM[0];
+                TM additionalTM = new TM() { TMName = addition[0], Server = addition[1] };
 
-                //dodac pare TM:logoport do listy
+                if (!ChooseTM_cmbBox.Items.Contains(additionalTM.TMName))
+                {
+                    ChooseTM_cmbBox.Items.Add(additionalTM.TMName);
+                    TMList.Add(additionalTM);
+                }
+                else
+                {
+                    MessageBox.Show("  Error:  Already on the list!", "Duplicate!");
+                }
+                                
+                ChooseTM_cmbBox.SelectedItem = additionalTM.TMName;
+
+                try
+                {
+                    using (Stream stream = File.Open(@"c:\users\zawii\documents\visual studio 2015\Projects\FTW_GUI_test\FTW_GUI_test\TMList.bin", FileMode.Create))
+                    {
+                        BinaryFormatter bin = new BinaryFormatter();
+                        bin.Serialize(stream, TMList);
+                    }
+                }
+                catch (IOException)
+                {
+                }
+
             }
 
+        }
+
+        private void DeleteTM_btn_Click(object sender, EventArgs e)
+        {
+
+            TM TMToRemove = TMList.Single(t => t.TMName == ChooseTM_cmbBox.SelectedItem.ToString());
+            TMList.Remove(TMToRemove);
+            try
+            {
+                using (Stream stream = File.Open(@"c:\users\zawii\documents\visual studio 2015\Projects\FTW_GUI_test\FTW_GUI_test\TMList.bin", FileMode.Create))
+                {
+                    BinaryFormatter bin = new BinaryFormatter();
+                    bin.Serialize(stream, TMList);
+                }
+            }
+            catch (IOException)
+            {
+            }
+            ChooseTM_cmbBox.Items.Remove(ChooseTM_cmbBox.SelectedItem);
+            //ChooseTM_cmbBox.SelectedIndex = 0;
+            ChooseTM_cmbBox.SelectedItem = TM.LastUsedTM;
+
+        }
+
+        private void TargetLangs_txtBox_Click(object sender, EventArgs e)
+        {
+            TargetLangs_txtBox.SelectAll();
+        }
+
+        private void SourceLang_txtBox_Click(object sender, EventArgs e)
+        {
+            SourceLang_txtBox.SelectAll();
+        }
+
+        private void CreateAnalysis_chckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CreateAnalysis_chckBox.Checked)
+            {
+                TargetLangs_txtBox.Enabled = true;
+            }
+            else
+            {
+                TargetLangs_txtBox.Enabled = false;
+
+            }
+
+
+        }
+
+        private async void PrepareFiles_Btn_Click(object sender, EventArgs e)
+        {
+            progressBar1.Maximum = 100;
+            progressBar1.Step = 1;
+
+            var progress = new Progress<int>(v =>
+            {
+                // This lambda is executed in context of UI thread,
+                // so it can safely update form controls
+                progressBar1.Value = v;
+                PrepareFiles_Btn.Text = v+"%";
+
+                PrepareFiles_Btn.Enabled = false;
+                Close_Btn.Enabled = false;
+
+                if (PrepareFiles_Btn.Text == "100%")
+                {
+                    PrepareFiles_Btn.Text = "Prepare file(s)";
+                    PrepareFiles_Btn.Enabled = true;
+                    Close_Btn.Enabled = true;
+                }
+            });
+
+            // Run operation in another thread
+            await Task.Run(() => Worker.DoWork(progress));
+
+            // TODO: Do something after all calculations
+
+        }
+
+        private void ChooseTM_cmbBox_DropDown(object sender, EventArgs e)
+        {
+            TM.LastUsedTM = ChooseTM_cmbBox.Text;
+        }
+
+        private void ClearFiles_btn_Click(object sender, EventArgs e)
+        {
+            FileList_txtBox.Clear();
+            FileCountNumber_label.Text = "0";
         }
     }
 }

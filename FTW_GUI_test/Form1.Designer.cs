@@ -52,6 +52,9 @@
             this.FileCountNumber_label = new System.Windows.Forms.Label();
             this.AddTM_btn = new System.Windows.Forms.Button();
             this.DeleteTM_btn = new System.Windows.Forms.Button();
+            this.SourceLang_txtBox = new System.Windows.Forms.TextBox();
+            this.TargetLangs_txtBox = new System.Windows.Forms.TextBox();
+            this.ClearFiles_btn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // PrepareFiles_Btn
@@ -62,6 +65,7 @@
             this.PrepareFiles_Btn.TabIndex = 0;
             this.PrepareFiles_Btn.Text = "Prepare file(s)";
             this.PrepareFiles_Btn.UseVisualStyleBackColor = true;
+            this.PrepareFiles_Btn.Click += new System.EventHandler(this.PrepareFiles_Btn_Click);
             // 
             // Close_Btn
             // 
@@ -75,12 +79,16 @@
             // 
             // ChooseTM_cmbBox
             // 
+            this.ChooseTM_cmbBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.ChooseTM_cmbBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.ChooseTM_cmbBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ChooseTM_cmbBox.FormattingEnabled = true;
             this.ChooseTM_cmbBox.Location = new System.Drawing.Point(349, 43);
             this.ChooseTM_cmbBox.Name = "ChooseTM_cmbBox";
             this.ChooseTM_cmbBox.Size = new System.Drawing.Size(182, 21);
+            this.ChooseTM_cmbBox.Sorted = true;
             this.ChooseTM_cmbBox.TabIndex = 2;
-            this.ChooseTM_cmbBox.Text = "Choose TM...";
+            this.ChooseTM_cmbBox.DropDown += new System.EventHandler(this.ChooseTM_cmbBox_DropDown);
             // 
             // progressBar1
             // 
@@ -213,6 +221,7 @@
             this.CreateAnalysis_chckBox.TabIndex = 14;
             this.CreateAnalysis_chckBox.Text = "Create Analysis ZIP";
             this.CreateAnalysis_chckBox.UseVisualStyleBackColor = true;
+            this.CreateAnalysis_chckBox.CheckedChanged += new System.EventHandler(this.CreateAnalysis_chckBox_CheckedChanged);
             // 
             // UnlockNumbers_chckBox
             // 
@@ -303,12 +312,45 @@
             this.DeleteTM_btn.Text = "Delete";
             this.DeleteTM_btn.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.DeleteTM_btn.UseVisualStyleBackColor = true;
+            this.DeleteTM_btn.Click += new System.EventHandler(this.DeleteTM_btn_Click);
+            // 
+            // SourceLang_txtBox
+            // 
+            this.SourceLang_txtBox.Location = new System.Drawing.Point(349, 80);
+            this.SourceLang_txtBox.Name = "SourceLang_txtBox";
+            this.SourceLang_txtBox.Size = new System.Drawing.Size(46, 20);
+            this.SourceLang_txtBox.TabIndex = 24;
+            this.SourceLang_txtBox.Text = "source";
+            this.SourceLang_txtBox.Click += new System.EventHandler(this.SourceLang_txtBox_Click);
+            // 
+            // TargetLangs_txtBox
+            // 
+            this.TargetLangs_txtBox.Location = new System.Drawing.Point(401, 80);
+            this.TargetLangs_txtBox.Name = "TargetLangs_txtBox";
+            this.TargetLangs_txtBox.Size = new System.Drawing.Size(130, 20);
+            this.TargetLangs_txtBox.TabIndex = 25;
+            this.TargetLangs_txtBox.Text = "target languages";
+            this.TargetLangs_txtBox.Click += new System.EventHandler(this.TargetLangs_txtBox_Click);
+            // 
+            // ClearFiles_btn
+            // 
+            this.ClearFiles_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 5.25F);
+            this.ClearFiles_btn.Location = new System.Drawing.Point(97, 99);
+            this.ClearFiles_btn.Name = "ClearFiles_btn";
+            this.ClearFiles_btn.Size = new System.Drawing.Size(10, 16);
+            this.ClearFiles_btn.TabIndex = 26;
+            this.ClearFiles_btn.Text = "X";
+            this.ClearFiles_btn.UseVisualStyleBackColor = true;
+            this.ClearFiles_btn.Click += new System.EventHandler(this.ClearFiles_btn_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(545, 471);
+            this.Controls.Add(this.ClearFiles_btn);
+            this.Controls.Add(this.TargetLangs_txtBox);
+            this.Controls.Add(this.SourceLang_txtBox);
             this.Controls.Add(this.DeleteTM_btn);
             this.Controls.Add(this.AddTM_btn);
             this.Controls.Add(this.FileCountNumber_label);
@@ -370,6 +412,9 @@
         private System.Windows.Forms.Label FileCountNumber_label;
         private System.Windows.Forms.Button AddTM_btn;
         private System.Windows.Forms.Button DeleteTM_btn;
+        private System.Windows.Forms.TextBox SourceLang_txtBox;
+        private System.Windows.Forms.TextBox TargetLangs_txtBox;
+        private System.Windows.Forms.Button ClearFiles_btn;
     }
 }
 
