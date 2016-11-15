@@ -22,11 +22,6 @@ namespace FTW_GUI_test
             InitializeComponent();
         }
         List<TM> TMList = new List<TM>();
-        List<string> SettingStorage = new List<string>();
-
-
-
-
 
 
         private void LockBasedOnFormatting_chckBox_CheckedChanged(object sender, EventArgs e)
@@ -58,7 +53,7 @@ namespace FTW_GUI_test
         }
 
         private void FileList_txtBox_DragEnter(object sender, DragEventArgs e)
-        {           
+        {
             e.Effect = DragDropEffects.Copy;
         }
 
@@ -72,8 +67,8 @@ namespace FTW_GUI_test
             {
                 //if (filepath.EndsWith()
                 //{
-                    
-                    FileList_txtBox.Text += filepath + Environment.NewLine;
+
+                FileList_txtBox.Text += filepath + Environment.NewLine;
                 //}
 
             }
@@ -108,6 +103,7 @@ namespace FTW_GUI_test
         private void Form1_Load(object sender, EventArgs e)
         {
 
+
             Login_txtBox.Text = Environment.UserName + "@lionbridge.com";
             if (Properties.Settings.Default.password != string.Empty)
             {
@@ -136,7 +132,7 @@ namespace FTW_GUI_test
                             {
                                 chckbx.Checked = bool.Parse(chckboxStatus);
                             }
-                            
+
                         }
 
                     }
@@ -150,7 +146,7 @@ namespace FTW_GUI_test
 
             try
             {
-                using (Stream stream = File.Open(@"c:\users\zawii\documents\visual studio 2015\Projects\FTW_GUI_test\FTW_GUI_test\TMList.bin", FileMode.OpenOrCreate))
+                using (Stream stream = File.Open(AppDomain.CurrentDomain.BaseDirectory + "TMList.bin", FileMode.OpenOrCreate))
                 {
                     BinaryFormatter bin = new BinaryFormatter();
 
@@ -184,9 +180,9 @@ namespace FTW_GUI_test
                 if (control is CheckBox)
                 {
                     CheckBox chckbx = control as CheckBox;
-                    Properties.Settings.Default.appSettings.Add(chckbx.Text + ':'+ chckbx.Checked);
+                    Properties.Settings.Default.appSettings.Add(chckbx.Text + ':' + chckbx.Checked);
                 }
-               
+
             }
 
             Properties.Settings.Default.Save();
@@ -216,12 +212,12 @@ namespace FTW_GUI_test
                 {
                     MessageBox.Show("  Error:  Already on the list!", "Duplicate!");
                 }
-                                
+
                 ChooseTM_cmbBox.SelectedItem = additionalTM.TMName;
 
                 try
                 {
-                    using (Stream stream = File.Open(@"c:\users\zawii\documents\visual studio 2015\Projects\FTW_GUI_test\FTW_GUI_test\TMList.bin", FileMode.Create))
+                    using (Stream stream = File.Open(AppDomain.CurrentDomain.BaseDirectory + "TMList.bin", FileMode.Create))
                     {
                         BinaryFormatter bin = new BinaryFormatter();
                         bin.Serialize(stream, TMList);
@@ -242,7 +238,7 @@ namespace FTW_GUI_test
             TMList.Remove(TMToRemove);
             try
             {
-                using (Stream stream = File.Open(@"c:\users\zawii\documents\visual studio 2015\Projects\FTW_GUI_test\FTW_GUI_test\TMList.bin", FileMode.Create))
+                using (Stream stream = File.Open(AppDomain.CurrentDomain.BaseDirectory + "TMList.bin", FileMode.Create))
                 {
                     BinaryFormatter bin = new BinaryFormatter();
                     bin.Serialize(stream, TMList);
@@ -284,31 +280,96 @@ namespace FTW_GUI_test
 
         private async void PrepareFiles_Btn_Click(object sender, EventArgs e)
         {
-            progressBar1.Maximum = 100;
-            progressBar1.Step = 1;
 
-            var progress = new Progress<int>(v =>
+            //get files from textbox
+
+            string[] filesPaths = FileList_txtBox.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+            List<string> Paths = new List<string>();
+
+            foreach (var item in filesPaths)
             {
-                // This lambda is executed in context of UI thread,
-                // so it can safely update form controls
-                progressBar1.Value = v;
-                PrepareFiles_Btn.Text = v+"%";
+                Paths.Add(item);
+            }
 
-                PrepareFiles_Btn.Enabled = false;
-                Close_Btn.Enabled = false;
 
-                if (PrepareFiles_Btn.Text == "100%")
+            string CommonPath = String.Empty;
+            string Separator = @"\";
+
+
+            List<string> SeparatedPath = Paths
+                .First(str => str.Length == Paths.Max(st2 => st2.Length))
+                .Split(new string[] { Separator }, StringSplitOptions.RemoveEmptyEntries)
+                .ToList();
+
+            foreach (string PathSegment in SeparatedPath.AsEnumerable())
+            {
+                if (CommonPath.Length == 0 && Paths.All(str => str.StartsWith(PathSegment)))
                 {
-                    PrepareFiles_Btn.Text = "Prepare file(s)";
-                    PrepareFiles_Btn.Enabled = true;
-                    Close_Btn.Enabled = true;
+                    CommonPath = PathSegment;
                 }
-            });
+                else if (Paths.All(str => str.StartsWith(CommonPath + Separator + PathSegment)))
+                {
+                    CommonPath += Separator + PathSegment;
+                }
+                else
+                {
+                    break;
+                }
+            }
 
-            // Run operation in another thread
-            await Task.Run(() => Worker.DoWork(progress));
+            MessageBox.Show(CommonPath);
 
-            // TODO: Do something after all calculations
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //progressBar1.Maximum = 100;
+            //progressBar1.Step = 1;
+
+            //var progress = new Progress<int>(v =>
+            //{
+            //    // This lambda is executed in context of UI thread,
+            //    // so it can safely update form controls
+            //    progressBar1.Value = v;
+            //    PrepareFiles_Btn.Text = v+"%";
+
+            //    PrepareFiles_Btn.Enabled = false;
+            //    Close_Btn.Enabled = false;
+
+            //    if (PrepareFiles_Btn.Text == "100%")
+            //    {
+            //        PrepareFiles_Btn.Text = "Prepare file(s)";
+            //        PrepareFiles_Btn.Enabled = true;
+            //        Close_Btn.Enabled = true;
+            //    }
+            //});
+
+            //// Run operation in another thread
+            //await Task.Run(() => Worker.DoWork(progress));
+
+            //// TODO: Do something after all calculations
 
         }
 
