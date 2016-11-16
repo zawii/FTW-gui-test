@@ -60,19 +60,38 @@ namespace FTW_GUI_test
         private void FileList_txtBox_DragDrop(object sender, DragEventArgs e)
         {
             FileList_txtBox.Text = string.Empty;
+            int counter = 0;
 
-            string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            string[] draggedItems = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 
-            foreach (var filepath in FileList)
+            foreach (var draggedItem in draggedItems)
             {
-                //if (filepath.EndsWith()
-                //{
 
-                FileList_txtBox.Text += filepath + Environment.NewLine;
-                //}
+                var attribute = File.GetAttributes(draggedItem);
+
+                if (attribute.HasFlag(FileAttributes.Directory))
+                {
+                    String[] allfiles = Directory.GetFiles(draggedItem, "*.docx", SearchOption.AllDirectories);
+
+                    foreach (var file in allfiles)
+                    {
+                        FileList_txtBox.Text += file + Environment.NewLine;
+                        counter++;
+                    }
+                }
+
+                if (draggedItem.EndsWith(".docx"))
+                {
+                    FileList_txtBox.Text += draggedItem + Environment.NewLine;
+                    counter++;
+                }
+                
+               
 
             }
-            FileCountNumber_label.Text = FileList.Length.ToString();
+
+            
+            FileCountNumber_label.Text = counter.ToString();
 
         }
 
@@ -283,42 +302,45 @@ namespace FTW_GUI_test
 
             //get files from textbox
 
-            string[] filesPaths = FileList_txtBox.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
-            List<string> Paths = new List<string>();
-
-            foreach (var item in filesPaths)
+            if (FileList_txtBox.Text != string.Empty)
             {
-                Paths.Add(item);
+                string[] filesPaths = FileList_txtBox.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+                List<string> Paths = new List<string>();
+
+                foreach (var item in filesPaths)
+                {
+                    Paths.Add(item);
+                }
+
+
+                string CommonPath = String.Empty;
+                string Separator = @"\";
+
+
+                List<string> SeparatedPath = Paths
+                    .First(str => str.Length == Paths.Max(st2 => st2.Length))
+                    .Split(new string[] { Separator }, StringSplitOptions.RemoveEmptyEntries)
+                    .ToList();
+
+                foreach (string PathSegment in SeparatedPath.AsEnumerable())
+                {
+                    if (CommonPath.Length == 0 && Paths.All(str => str.StartsWith(PathSegment)))
+                    {
+                        CommonPath = PathSegment;
+                    }
+                    else if (Paths.All(str => str.StartsWith(CommonPath + Separator + PathSegment)))
+                    {
+                        CommonPath += Separator + PathSegment;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                MessageBox.Show(CommonPath); 
             }
-
-
-            string CommonPath = String.Empty;
-            string Separator = @"\";
-
-
-            List<string> SeparatedPath = Paths
-                .First(str => str.Length == Paths.Max(st2 => st2.Length))
-                .Split(new string[] { Separator }, StringSplitOptions.RemoveEmptyEntries)
-                .ToList();
-
-            foreach (string PathSegment in SeparatedPath.AsEnumerable())
-            {
-                if (CommonPath.Length == 0 && Paths.All(str => str.StartsWith(PathSegment)))
-                {
-                    CommonPath = PathSegment;
-                }
-                else if (Paths.All(str => str.StartsWith(CommonPath + Separator + PathSegment)))
-                {
-                    CommonPath += Separator + PathSegment;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            MessageBox.Show(CommonPath);
 
 
 
