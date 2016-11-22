@@ -45,5 +45,29 @@ namespace FTW_GUI_test.Properties {
                 this["appSettings"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SourceLang {
+            get {
+                return ((string)(this["SourceLang"]));
+            }
+            set {
+                this["SourceLang"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TargetLangs {
+            get {
+                return ((string)(this["TargetLangs"]));
+            }
+            set {
+                this["TargetLangs"] = value;
+            }
+        }
     }
 }

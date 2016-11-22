@@ -129,6 +129,16 @@ namespace FTW_GUI_test
                 Password_txtBox.Text = Properties.Settings.Default.password;
             }
 
+            if (Properties.Settings.Default.SourceLang != string.Empty)
+            {
+                SourceLang_txtBox.Text = Properties.Settings.Default.SourceLang;
+            }
+
+            if (Properties.Settings.Default.TargetLangs != string.Empty)
+            {
+                TargetLangs_txtBox.Text = Properties.Settings.Default.TargetLangs;
+            }
+
 
             if (Properties.Settings.Default.appSettings != null)
             {
@@ -189,7 +199,8 @@ namespace FTW_GUI_test
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
 
-
+            Properties.Settings.Default.SourceLang = SourceLang_txtBox.Text;
+            Properties.Settings.Default.TargetLangs = TargetLangs_txtBox.Text;
             Properties.Settings.Default.password = Password_txtBox.Text;
 
             Properties.Settings.Default.appSettings.Clear();
