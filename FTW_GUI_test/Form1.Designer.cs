@@ -55,6 +55,7 @@
             this.SourceLang_txtBox = new System.Windows.Forms.TextBox();
             this.TargetLangs_txtBox = new System.Windows.Forms.TextBox();
             this.ClearFiles_btn = new System.Windows.Forms.Button();
+            this.TargetLangsCount_lbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // PrepareFiles_Btn
@@ -318,19 +319,20 @@
             // 
             this.SourceLang_txtBox.Location = new System.Drawing.Point(349, 80);
             this.SourceLang_txtBox.Name = "SourceLang_txtBox";
-            this.SourceLang_txtBox.Size = new System.Drawing.Size(46, 20);
+            this.SourceLang_txtBox.Size = new System.Drawing.Size(35, 20);
             this.SourceLang_txtBox.TabIndex = 24;
             this.SourceLang_txtBox.Text = "source";
             this.SourceLang_txtBox.Click += new System.EventHandler(this.SourceLang_txtBox_Click);
             // 
             // TargetLangs_txtBox
             // 
-            this.TargetLangs_txtBox.Location = new System.Drawing.Point(401, 80);
+            this.TargetLangs_txtBox.Location = new System.Drawing.Point(390, 80);
             this.TargetLangs_txtBox.Name = "TargetLangs_txtBox";
             this.TargetLangs_txtBox.Size = new System.Drawing.Size(130, 20);
             this.TargetLangs_txtBox.TabIndex = 25;
             this.TargetLangs_txtBox.Text = "target languages";
             this.TargetLangs_txtBox.Click += new System.EventHandler(this.TargetLangs_txtBox_Click);
+            this.TargetLangs_txtBox.TextChanged += new System.EventHandler(this.TargetLangs_txtBox_TextChanged);
             // 
             // ClearFiles_btn
             // 
@@ -343,11 +345,21 @@
             this.ClearFiles_btn.UseVisualStyleBackColor = true;
             this.ClearFiles_btn.Click += new System.EventHandler(this.ClearFiles_btn_Click);
             // 
+            // TargetLangsCount_lbl
+            // 
+            this.TargetLangsCount_lbl.AutoSize = true;
+            this.TargetLangsCount_lbl.Location = new System.Drawing.Point(524, 83);
+            this.TargetLangsCount_lbl.Name = "TargetLangsCount_lbl";
+            this.TargetLangsCount_lbl.Size = new System.Drawing.Size(13, 13);
+            this.TargetLangsCount_lbl.TabIndex = 27;
+            this.TargetLangsCount_lbl.Text = "0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(545, 471);
+            this.Controls.Add(this.TargetLangsCount_lbl);
             this.Controls.Add(this.ClearFiles_btn);
             this.Controls.Add(this.TargetLangs_txtBox);
             this.Controls.Add(this.SourceLang_txtBox);
@@ -415,6 +427,7 @@
         private System.Windows.Forms.TextBox SourceLang_txtBox;
         private System.Windows.Forms.TextBox TargetLangs_txtBox;
         private System.Windows.Forms.Button ClearFiles_btn;
+        private System.Windows.Forms.Label TargetLangsCount_lbl;
     }
 }
 

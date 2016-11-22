@@ -416,5 +416,11 @@ namespace FTW_GUI_test
             FileList_txtBox.Clear();
             FileCountNumber_label.Text = "0";
         }
+
+        private void TargetLangs_txtBox_TextChanged(object sender, EventArgs e)
+        {
+            string[] targetLangsArray = TargetLangs_txtBox.Text.Split(',');
+            TargetLangsCount_lbl.Text = targetLangsArray.Length.ToString();
+        }
     }
 }
