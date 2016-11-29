@@ -85,12 +85,12 @@ namespace FTW_GUI_test
                     FileList_txtBox.Text += draggedItem + Environment.NewLine;
                     counter++;
                 }
-                
-               
+
+
 
             }
 
-            
+
             FileCountNumber_label.Text = counter.ToString();
 
         }
@@ -263,8 +263,21 @@ namespace FTW_GUI_test
 
         private void DeleteTM_btn_Click(object sender, EventArgs e)
         {
+            TM TMToRemove = null;
 
-            TM TMToRemove = TMList.Single(t => t.TMName == ChooseTM_cmbBox.SelectedItem.ToString());
+            if (TMList.Exists(t => t.TMName == ChooseTM_cmbBox.SelectedItem.ToString())
+)
+            {
+                TMToRemove = TMList.Single(t => t.TMName == ChooseTM_cmbBox.SelectedItem.ToString());
+
+            }
+            else
+            {
+
+                MessageBox.Show("Nothing to remove!");
+            }
+
+
             TMList.Remove(TMToRemove);
             try
             {
@@ -317,13 +330,7 @@ namespace FTW_GUI_test
             {
                 string[] filesPaths = FileList_txtBox.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
-                List<string> Paths = new List<string>();
-
-                foreach (var item in filesPaths)
-                {
-                    Paths.Add(item);
-                }
-
+                List<string> Paths = new List<string>(filesPaths.AsEnumerable());
 
                 string CommonPath = String.Empty;
                 string Separator = @"\";
@@ -350,7 +357,7 @@ namespace FTW_GUI_test
                     }
                 }
 
-                MessageBox.Show(CommonPath); 
+                MessageBox.Show(CommonPath);
             }
 
 
