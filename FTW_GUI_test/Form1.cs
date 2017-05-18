@@ -190,7 +190,8 @@ namespace FTW_GUI_test
             {
             }
 
-            ChooseTM_cmbBox.SelectedIndex = 0;
+            ChooseTM_cmbBox.SelectedIndex = 0;  // TODO to fix, as it throws an AOOR exception (if combobox has no items), swallowed by CLR unless excplicitly marked to break;
+                                                // loads first TM on the list - implement loading last used TM
 
 
 
@@ -269,11 +270,9 @@ namespace FTW_GUI_test
 )
             {
                 TMToRemove = TMList.Single(t => t.TMName == ChooseTM_cmbBox.SelectedItem.ToString());
-
             }
             else
             {
-
                 MessageBox.Show("Nothing to remove!");
             }
 
@@ -341,7 +340,7 @@ namespace FTW_GUI_test
                     .Split(new string[] { Separator }, StringSplitOptions.RemoveEmptyEntries)
                     .ToList();
 
-                foreach (string PathSegment in SeparatedPath.AsEnumerable())
+                foreach (string PathSegment in SeparatedPath)
                 {
                     if (CommonPath.Length == 0 && Paths.All(str => str.StartsWith(PathSegment)))
                     {
@@ -358,6 +357,10 @@ namespace FTW_GUI_test
                 }
 
                 MessageBox.Show(CommonPath);
+            }
+            else
+            {
+                MessageBox.Show("No files!");
             }
 
 
@@ -385,31 +388,33 @@ namespace FTW_GUI_test
 
 
 
-            //progressBar1.Maximum = 100;
-            //progressBar1.Step = 1;
+            progressBar1.Maximum = 100+1;
+            progressBar1.Step = 1;
 
-            //var progress = new Progress<int>(v =>
-            //{
-            //    // This lambda is executed in context of UI thread,
-            //    // so it can safely update form controls
-            //    progressBar1.Value = v;
-            //    PrepareFiles_Btn.Text = v+"%";
+            var progress = new Progress<int>(v =>
+            {
+                // This lambda is executed in context of UI thread,
+                // so it can safely update form controls
+                progressBar1.Value = v;
+                progressBar1.Value = v -1;
+                progressBar1.Value = v;
+                PrepareFiles_Btn.Text = v + "%";
 
-            //    PrepareFiles_Btn.Enabled = false;
-            //    Close_Btn.Enabled = false;
+                PrepareFiles_Btn.Enabled = false;
+                Close_Btn.Enabled = false;
 
-            //    if (PrepareFiles_Btn.Text == "100%")
-            //    {
-            //        PrepareFiles_Btn.Text = "Prepare file(s)";
-            //        PrepareFiles_Btn.Enabled = true;
-            //        Close_Btn.Enabled = true;
-            //    }
-            //});
+                if (PrepareFiles_Btn.Text == "100%")
+                {
+                    PrepareFiles_Btn.Text = "Prepare file(s)";
+                    PrepareFiles_Btn.Enabled = true;
+                    Close_Btn.Enabled = true;
+                }
+            });
 
-            //// Run operation in another thread
-            //await Task.Run(() => Worker.DoWork(progress));
+            // Run operation in another thread
+            await Task.Run(() => Worker.DoWork(progress));
 
-            //// TODO: Do something after all calculations
+            // TODO: Do something after all calculations
 
         }
 
